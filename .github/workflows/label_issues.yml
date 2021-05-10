@@ -12,5 +12,4 @@ jobs:
         env: 
           PAYLOAD: ${{ github.context.payload }}
           LABEL_NAME: ${{ github.context.payload.label.name }}
-        if: ${{ env.LABEL_NAME == 'Bug' }}
         run: echo "woot"
