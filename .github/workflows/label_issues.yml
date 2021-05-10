@@ -12,4 +12,5 @@ jobs:
         env: 
           PAYLOAD: ${{ toJson(github.event) }}
           LABEL_NAME: ${{ github.event.label.name }}
+        if: ${{ $LABEL_NAME == 'Bug' }}
         run: echo "woot"
