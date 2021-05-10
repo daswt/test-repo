@@ -10,6 +10,6 @@ jobs:
     steps:
       - name: add 'Approved'
         env: 
-          PAYLOAD: ${{ github.event }}
+          PAYLOAD: ${{ toJson(github.event) }}
           LABEL_NAME: ${{ github.event.label.name }}
         run: echo "woot"
