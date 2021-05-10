@@ -8,9 +8,9 @@ jobs:
   add-confirmed-label:
     runs-on: ubuntu-latest
     steps:
-      - name: add 'Confirmed'
+      - name: add 'Approved'
         env: 
           PAYLOAD: ${{ github.context.payload }}
           LABEL_NAME: ${{ github.context.payload.label.name }}
         if: ${{ env.LABEL_NAME == 'Bug' }}
-        run: echo woot
+        run: echo "woot"
