@@ -1,1 +1,16 @@
+name: Set FP labels
 
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  add-confirmed-label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: add 'Confirmed'
+        env: 
+          PAYLOAD: ${{ github.context.payload }}
+          LABEL_NAME: ${{ github.context.payload.label.name }}
+        if: ${{ LABEL_NAME == 'Bug' }}
+        run: echo woot
