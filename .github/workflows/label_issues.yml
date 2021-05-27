@@ -9,14 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: add 'Approved'
+      - uses: actions/checkout@v2
+      - uses: actions-ecosystem/action-add-labels@v1
         env: 
           PAYLOAD: ${{ toJson(github.event) }}
           LABEL_NAME: ${{ github.event.label.name }}
         if: ${{ github.event.label.name  == 'Bug' }} 
-        run: |
-          github.GitHub.issues.addLabels({
-            owner: github.repository.owner,
-            repo: github.repository,
-            issue_number: github.event.issue.number,
-            labels: ["FP: Approved"]
-          })
+        with:
+          labels: "FP: Approved"
