@@ -3,17 +3,25 @@ name: Set FP labels
 on:
   issues:
     types: [labeled]
+  project_card:
+    types: [moved]
 
 jobs:
-  add-confirmed-label:
+  add-approved-label:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions-ecosystem/action-add-labels@v1
-        env: 
-          PAYLOAD: ${{ toJson(github.event) }}
-          LABEL_NAME: ${{ github.event.label.name }}
-        if: ${{ github.event.label.name  == 'Bug' }} 
+        if: ${{ github.event.action == "labeled" && github.event.label.name  == 'Bug' }} 
         with:
           github_token: "${{ secrets.GITHUB_TOKEN }}"
           labels: "FP: Approved"
+  
+  add-indevelopment-label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: add in developlent label
+        env: 
+          PAYLOAD: ${{ toJson(github.event) }}
+        run: echo $PAYLOAD
+      
