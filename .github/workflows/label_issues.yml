@@ -13,8 +13,4 @@ jobs:
           PAYLOAD: ${{ toJson(github.event) }}
           LABEL_NAME: ${{ github.event.label.name }}
         if: ${{ github.event.label.name  == 'Bug' }} 
-        run: |
-          github.GitHub.issues.addLabels({
-            issue_number: 1,
-            labels: "FP: Approved"
-          })
+        run: echo $PAYLOAD
