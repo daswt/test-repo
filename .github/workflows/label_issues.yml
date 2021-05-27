@@ -15,4 +15,5 @@ jobs:
           LABEL_NAME: ${{ github.event.label.name }}
         if: ${{ github.event.label.name  == 'Bug' }} 
         with:
+          github_token: "${{ secrets.GITHUB_TOKEN }}"
           labels: "FP: Approved"
