@@ -12,9 +12,10 @@ jobs:
         env: 
           PAYLOAD: ${{ toJson(github.event) }}
           LABEL_NAME: ${{ github.event.label.name }}
+          CONTEXT: ${{ github.context }}
         if: ${{ github.event.label.name  == 'Bug' }} 
         run: |
-          echo github.context
+          echo $CONTEXT
           github.GitHub.issues.addLabels({
             owner: github.context.repo.owner,
             repo: github.context.repo.repo,
