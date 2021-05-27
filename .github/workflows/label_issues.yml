@@ -12,13 +12,13 @@ jobs:
         env: 
           PAYLOAD: ${{ toJson(github.event) }}
           LABEL_NAME: ${{ github.event.label.name }}
-          CONTEXT: ${{ github.context }}
+          CONTEXT: ${{ github }}
         if: ${{ github.event.label.name  == 'Bug' }} 
         run: |
           echo $CONTEXT
           github.GitHub.issues.addLabels({
-            owner: github.context.repo.owner,
-            repo: github.context.repo.repo,
+            owner: github.repo.owner,
+            repo: github.repo.repo,
             issue_number: github.event.issue.number,
             labels: ["FP: Approved"]
           })
