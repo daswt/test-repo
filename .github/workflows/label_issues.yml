@@ -17,13 +17,6 @@ jobs:
           github_token: "${{ secrets.GITHUB_TOKEN }}"
           labels: "FP: Approved"
   
-  add-indevelopment-label:
-    runs-on: ubuntu-latest
-    steps:
-      - name: add in developlent label
-      - uses: actions/checkout@v2
-      - uses: actions-ecosystem/action-add-labels@v1
-        env: 
-          PAYLOAD: ${{ toJson(github.event) }}
+
         
       
