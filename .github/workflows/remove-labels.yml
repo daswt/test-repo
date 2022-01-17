@@ -1,14 +1,18 @@
 name: Remove labels
-
 on:
   project_card:
-    types: [moved]
-
-jobs:          
-  add-indevelopment-label:
+    types:
+      - moved
+jobs:
+  remove_labels:
+    if: github.event.project_card.column_id == '14239591'
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
     steps:
-      - name: add in developlent label
-        env: 
-          PAYLOAD: ${{ toJson(github.event) }}
-        run: echo $PAYLOAD
+      - name: remove labels
+        uses: andymckay/labeler@5c59dabdfd4dd5bd9c6e6d255b01b9d764af4414
+        with:
+          remove-labels: "FP: Approved"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
