@@ -4,7 +4,8 @@ on:
   issues:
     types: [labeled]
   project_card:
-    types: [moved]
+    types:
+      - moved
 
 jobs:
   add-approved-label:
