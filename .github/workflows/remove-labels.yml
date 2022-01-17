@@ -1,0 +1,15 @@
+name: Remove labels
+
+on:
+  project_card:
+    types:
+      - moved
+
+jobs:          
+  add-indevelopment-label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: add in developlent label
+        env: 
+          PAYLOAD: ${{ toJson(github.event) }}
+        run: echo $PAYLOAD
