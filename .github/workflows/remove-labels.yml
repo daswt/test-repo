@@ -1,8 +1,8 @@
 name: Remove labels
 on:
-  project_card:
+  issues:
     types:
-      - moved
+      - moved_columns_in_project
 jobs:
   remove_labels:
     if: github.event.project_card.column_id == '17506111'
