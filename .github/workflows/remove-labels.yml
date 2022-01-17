@@ -2,8 +2,7 @@ name: Remove labels
 
 on:
   project_card:
-    types:
-      - moved
+    types: [moved]
 
 jobs:          
   add-indevelopment-label:
