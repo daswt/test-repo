@@ -5,7 +5,7 @@ on:
       - moved
 jobs:
   remove_labels:
-    if: github.event.project_card.column_id == '14239591'
+    if: github.event.project_card.column_id == '17506111'
     runs-on: ubuntu-latest
     permissions:
       issues: write
