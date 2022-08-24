@@ -2,11 +2,9 @@ name: Set FP labels
 
 on:
   issues:
-    types: [labeled]
-  project_card:
-    types:
-      - moved
-
+    types: 
+      - edited
+      
 jobs:
   add-approved-label:
     runs-on: ubuntu-latest
