@@ -1,0 +1,39 @@
+
+name: Label opened issues
+on:
+  issues:
+    types:
+      - reopened
+      - opened
+jobs:
+  show-event:
+    runs-on: ubuntu-latest
+    steps:
+      - name: show payload
+        env: 
+          PAYLOAD: ${{ toJson(github.event) }}
+        run: echo $PAYLOAD
+  label_milestoned_issues:
+    if: ${{ github.event.issue.milestone != '' }}
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Label issues
+        uses: andymckay/labeler@1.0.2
+        with:
+          add-labels: "FP: Planned"
+          remove-labels: "FP: Completed, FP: Unplanned"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+  label_unmilestoned_issues:
+    if: ${{ github.event.issue.milestone == '' }}
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Label issues
+        uses: andymckay/labeler@1.0.2
+        with:
+          add-labels: "FP: Unplanned"
+          remove-labels: "FP: Completed, FP: Planned, FP: In Development"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
