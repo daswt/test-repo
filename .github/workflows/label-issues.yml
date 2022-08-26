@@ -4,13 +4,13 @@ on:
     types:
       - opened
       - reopened
-      - edited
       - closed
       - milestoned
       - demilestoned
 jobs:
-  label_opened_issues:
-    if: ${{ github.event.action == 'opened' && github.event.issue.state == 'open' && !contains(join(github.event.issue.labels.*.name, ''), 'Development') }}
+# Label opened issues without milestone as 'Unplanned'
+  label_opened_no_milestoned_issues:
+    if: ${{ github.event.action == 'opened' && github.event.issue.milestone == '' }}
     runs-on: ubuntu-latest
     permissions:
       issues: write
@@ -18,16 +18,43 @@ jobs:
       - name: Label issues
         uses: andymckay/labeler@1.0.2
         with:
-          add-labels: "FP: Unlanned"
+          add-labels: "FP: Unplanned"
+          remove-labels: "FP: Completed, FP: Planned, FP: In Development"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+# Label opened issues with milestone as 'Planned'
+  label_opened_milestoned_issues:
+    if: ${{ github.event.action == 'opened' && github.event.issue.milestone != '' }}
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Label issues Planned
+        uses: andymckay/labeler@1.0.2
+        with:
+          add-labels: "FP: Planned"
+          remove-labels: "FP: Completed, FP: Unplanned"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+# Label issues with milestone as 'Planned' 
+  label_milestoned_issues:
+    if: ${{ github.event.action == 'milestoned' && github.event.issue.state == 'open' && !contains(join(github.event.issue.labels.*.name, ''), 'Development') }}
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Label issues Planned
+        uses: andymckay/labeler@1.0.2
+        with:
+          add-labels: "FP: Planned"
           remove-labels: "FP: Unplanned, FP: Completed"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+# Label closed issues with 'Completed' label
   label_closed_issues:
     if: ${{ github.event.action == 'closed' }}
     runs-on: ubuntu-latest
     permissions:
       issues: write
     steps:
-      - name: Label issues
+      - name: Label issues Completed
         uses: andymckay/labeler@1.0.2
         with:
           add-labels: "FP: Completed"
