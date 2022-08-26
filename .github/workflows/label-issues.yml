@@ -87,3 +87,15 @@ jobs:
           add-labels: "FP: In Development"
           remove-labels: "FP: Unplanned, FP: Planned"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+# Issue opened with label Bug - add Unplanned
+  bug_opened:
+    if: ${{ github.event.action == 'opened' && contains(join(github.event.issue.labels.*.name, ''), 'Bug') }}
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Set Unplanned label to confirmed bugs
+        uses: andymckay/labeler@1.0.2
+        with:
+          add-labels: "FP: Unplanned"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
