@@ -1,0 +1,18 @@
+name: show issue payload
+on:
+  issues:
+    types:
+      - opened
+      - reopened
+      - edited
+      - closed
+      - milestoned
+      - demilestoned
+jobs:
+  show-event:
+    runs-on: ubuntu-latest
+    steps:
+      - name: show payload
+        env: 
+          PAYLOAD: ${{ toJson(github.event) }}
+        run: echo $PAYLOAD
